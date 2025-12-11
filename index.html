@@ -1,3 +1,13 @@
+  <!-- HOME PAGE -->
+
+  <!-- ATLAS -->
+  <!-- (1) Google Font -->
+  <!-- (2)  -->
+  <!-- ATLAS -->
+  <!-- ATLAS -->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,17 +24,27 @@
 </head>
 <body>
 
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music</a>
+  </nav>
+
   <!-- Fullscreen background video -->
   <video autoplay muted playsinline id="bg-video">
     <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
+  <!-- Song title above controls -->
+  <div id="song-title-display">Amazing</div>
+
   <!-- Music Player Overlay -->
   <div id="music-player">
-    <button id="prev-song">&lt;</button>
-    <span id="song-title">Amazing</span>
-    <button id="next-song">&gt;</button>
+    <button id="prev-song"><</button>
+    <button id="play-pause">▐▐</button>
+    <button id="next-song">></button>
   </div>
 
   <!-- Audio element -->
@@ -39,10 +59,13 @@
   <script>
     // --- VIDEO LOOP ---
     const video = document.getElementById('bg-video');
+    
     const videos = [
+
       { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
       { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
       { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
+
     ];
     let vidIndex = 0;
 
@@ -58,9 +81,10 @@
 
     // --- AUDIO LOOP & CONTROLS ---
     const audio = document.getElementById('bg-audio');
-    const songTitle = document.getElementById('song-title');
+    const songTitleDisplay = document.getElementById('song-title-display');
     const nextBtn = document.getElementById('next-song');
     const prevBtn = document.getElementById('prev-song');
+    const playPauseBtn = document.getElementById('play-pause');
 
     const songs = [
       'assets/bgmusic/Amazing.mp3',
@@ -78,35 +102,42 @@
 
     let songIndex = 0;
     audio.src = songs[songIndex];
-    songTitle.textContent = songNames[songIndex];
+    songTitleDisplay.textContent = songNames[songIndex];
 
     // Play/pause toggle
-    songTitle.addEventListener('click', () => {
-      if(audio.paused) audio.play();
-      else audio.pause();
+    playPauseBtn.addEventListener('click', () => {
+      if(audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = '▐▐';
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = '▶';
+      }
     });
 
     // Next song
     nextBtn.addEventListener('click', () => {
       songIndex = (songIndex + 1) % songs.length;
       audio.src = songs[songIndex];
-      songTitle.textContent = songNames[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
       audio.play();
+      playPauseBtn.textContent = '▐▐';
     });
 
     // Previous song
     prevBtn.addEventListener('click', () => {
       songIndex = (songIndex - 1 + songs.length) % songs.length;
       audio.src = songs[songIndex];
-      songTitle.textContent = songNames[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
       audio.play();
+      playPauseBtn.textContent = '▐▐';
     });
 
     // Auto-loop playlist
     audio.addEventListener('ended', () => {
       songIndex = (songIndex + 1) % songs.length;
       audio.src = songs[songIndex];
-      songTitle.textContent = songNames[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
       audio.play();
     });
   </script>
