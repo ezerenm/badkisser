@@ -1,2 +1,115 @@
-<h1>badkisser</h1>
-<p>hey nice to meet ya</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>badkisser</title>
+
+  <!-- Google Font: Ballet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Fullscreen background video -->
+  <video autoplay muted playsinline id="bg-video">
+    <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Music Player Overlay -->
+  <div id="music-player">
+    <button id="prev-song">&lt;</button>
+    <span id="song-title">Amazing</span>
+    <button id="next-song">&gt;</button>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bg-audio"></audio>
+
+  <!-- Centered content -->
+  <div class="content">
+    <h1>Badkisser</h1>
+  </div>
+
+  <!-- JavaScript for videos and audio -->
+  <script>
+    // --- VIDEO LOOP ---
+    const video = document.getElementById('bg-video');
+    const videos = [
+      { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
+      { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
+      { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
+    ];
+    let vidIndex = 0;
+
+    video.addEventListener('ended', () => {
+      vidIndex = (vidIndex + 1) % videos.length;
+      video.src = videos[vidIndex].src;
+      video.style.objectPosition = videos[vidIndex].position;
+      video.play();
+    });
+
+    // Set initial object position
+    video.style.objectPosition = videos[0].position;
+
+    // --- AUDIO LOOP & CONTROLS ---
+    const audio = document.getElementById('bg-audio');
+    const songTitle = document.getElementById('song-title');
+    const nextBtn = document.getElementById('next-song');
+    const prevBtn = document.getElementById('prev-song');
+
+    const songs = [
+      'assets/bgmusic/Amazing.mp3',
+      'assets/bgmusic/Cherish The Day.mp3',
+      'assets/bgmusic/Re Entry.mp3',
+      'assets/bgmusic/U Fancy.mp3'
+    ];
+
+    const songNames = [
+      'Amazing',
+      'Cherish The Day',
+      'Re Entry',
+      'U Fancy'
+    ];
+
+    let songIndex = 0;
+    audio.src = songs[songIndex];
+    songTitle.textContent = songNames[songIndex];
+
+    // Play/pause toggle
+    songTitle.addEventListener('click', () => {
+      if(audio.paused) audio.play();
+      else audio.pause();
+    });
+
+    // Next song
+    nextBtn.addEventListener('click', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitle.textContent = songNames[songIndex];
+      audio.play();
+    });
+
+    // Previous song
+    prevBtn.addEventListener('click', () => {
+      songIndex = (songIndex - 1 + songs.length) % songs.length;
+      audio.src = songs[songIndex];
+      songTitle.textContent = songNames[songIndex];
+      audio.play();
+    });
+
+    // Auto-loop playlist
+    audio.addEventListener('ended', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitle.textContent = songNames[songIndex];
+      audio.play();
+    });
+  </script>
+
+</body>
+</html>
