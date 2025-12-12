@@ -1,1 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About - badkisser</title>
 
+  <!-- Google Font: Ballet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music</a>
+  </nav>
+
+  <!-- Fullscreen background video -->
+  <video autoplay muted playsinline id="bg-video">
+    <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Song title above controls -->
+  <div id="song-title-display">Amazing</div>
+
+  <!-- Music Player Overlay -->
+  <div id="music-player">
+    <button id="prev-song">↫</button>
+    <button id="play-pause">⭘</button>
+    <button id="next-song">↬</button>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bg-audio"></audio>
+
+  <!-- Centered content - ABOUT TEXT -->
+  <div class="content about-content">
+    <!-- Pokemon Team -->
+    <div class="pokemon-team">
+      <a href="https://pokemondb.net/pokedex/arcanine"><img src="assets/pokemon/Arcanine.gif" alt="Arcanine"></a>
+      <a href="https://pokemondb.net/pokedex/empoleon"><img src="assets/pokemon/Empoleon.gif" alt="Empoleon"></a>
+      <a href="https://pokemondb.net/pokedex/hydreigon"><img src="assets/pokemon/Hydreigon.gif" alt="Hydreigon"></a>
+      <a href="https://pokemondb.net/pokedex/mesprit"><img src="assets/pokemon/Mesprit.gif" alt="Mesprit"></a>
+      <a href="https://pokemondb.net/pokedex/gliscor"><img src="assets/pokemon/Gliscor.gif" alt="Gliscor"></a>
+      <a href="https://pokemondb.net/pokedex/luxray"><img src="assets/pokemon/Luxray.gif" alt="Luxray"></a>
+    </div>
+
+    <p>
+      This is my space to archive the beauty I happen to cross paths with.<br>
+      A personal gallery of pieces of my soul, for you to see.<br><br>
+      Established in San Francisco, 2025.
+    </p>
+  </div>
+
+  <!-- JavaScript for videos and audio -->
+  <script>
+    // --- VIDEO LOOP ---
+    const video = document.getElementById('bg-video');
+    
+    const videos = [
+      { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
+      { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
+      { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
+    ];
+    let vidIndex = 0;
+
+    video.addEventListener('ended', () => {
+      vidIndex = (vidIndex + 1) % videos.length;
+      video.src = videos[vidIndex].src;
+      video.style.objectPosition = videos[vidIndex].position;
+      video.play();
+    });
+
+    // Set initial object position
+    video.style.objectPosition = videos[0].position;
+
+    // --- AUDIO LOOP & CONTROLS ---
+    const audio = document.getElementById('bg-audio');
+    const songTitleDisplay = document.getElementById('song-title-display');
+    const nextBtn = document.getElementById('next-song');
+    const prevBtn = document.getElementById('prev-song');
+    const playPauseBtn = document.getElementById('play-pause');
+
+    const songs = [
+      'assets/bgmusic/Amazing.mp3',
+      'assets/bgmusic/Tell Your Friends.mp3',
+      'assets/bgmusic/Lovers Rock.mp3'
+    ];
+
+    const songNames = [
+      'Amazing',
+      'Tell Your Friends',
+      'Lovers Rock'
+    ];
+
+    let songIndex = 0;
+    audio.src = songs[songIndex];
+    songTitleDisplay.textContent = songNames[songIndex];
+
+    // Play/pause toggle
+    playPauseBtn.addEventListener('click', () => {
+      if(audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = '⭘';
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = '●';
+      }
+    });
+
+    // Next song
+    nextBtn.addEventListener('click', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+      playPauseBtn.textContent = '⭘';
+    });
+
+    // Previous song
+    prevBtn.addEventListener('click', () => {
+      songIndex = (songIndex - 1 + songs.length) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+      playPauseBtn.textContent = '⭘';
+    });
+
+    // Auto-loop playlist
+    audio.addEventListener('ended', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+    });
+  </script>
+
+</body>
+</html>

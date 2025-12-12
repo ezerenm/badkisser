@@ -1,1 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music - badkisser</title>
 
+  <!-- Google Font: Ballet -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music</a>
+  </nav>
+
+  <!-- Fullscreen background video -->
+  <video autoplay muted playsinline id="bg-video">
+    <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- Song title above controls -->
+  <div id="song-title-display">Amazing</div>
+
+  <!-- Music Player Overlay -->
+  <div id="music-player">
+    <button id="prev-song">↫</button>
+    <button id="play-pause">⭘</button>
+    <button id="next-song">↬</button>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bg-audio"></audio>
+
+  <!-- Music Page Content -->
+  <div class="music-page-container">
+    
+    <!-- First Playlist Row (NEW ONE) -->
+    <div class="playlist-row">
+      <!-- Spotify Embed (Left/Northwest) -->
+      <div class="spotify-embed">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5J0FTDvZgYzyf3g2zlyuom?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      
+      <!-- Text Description (Right/Northeast) -->
+      <div class="playlist-description">
+        <p>
+          Badkisser Radio Episode One!.<br><br>
+          These are the songs that play in the background.<br><br>
+          Lifespan December 11, 2025 to ____ ___, 20__
+          
+        </p>
+      </div>
+    </div>
+
+    <!-- Second Playlist Row (OLD ONE) -->
+    <div class="playlist-row">
+      <!-- Spotify Embed (Left/Northwest) -->
+      <div class="spotify-embed">
+        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0TSbbRTjPw7MtAh8nc2q7E?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+      </div>
+      
+      <!-- Text Description (Right/Northeast) -->
+      <div class="playlist-description">
+        <p>
+          Barroilhet Avenue. Where do I start?<br><br>
+          I had a friend who lived in this spacious, empty house that they had to themselves more often than any teenager should. Each house is basically closed off and theres all types of houses. This house had a pink transluscent sculpture of a woman's body in the backyard. Only the hallways lights ever stayed on, these songs playing through their fathers sound system in his office. We would just pass through
+          each room like ghosts. Barroilhet Ave isn't just a street to me; it's a experimental limbo of over honesty, moping, and early unwanted independence.<br><br>
+
+          Created on July 13, 2025.<br><br>
+          Inspired by May - July, 2021.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- JavaScript for videos and audio -->
+  <script>
+    // --- VIDEO LOOP ---
+    const video = document.getElementById('bg-video');
+    
+    const videos = [
+      { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
+      { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
+      { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
+    ];
+    let vidIndex = 0;
+
+    video.addEventListener('ended', () => {
+      vidIndex = (vidIndex + 1) % videos.length;
+      video.src = videos[vidIndex].src;
+      video.style.objectPosition = videos[vidIndex].position;
+      video.play();
+    });
+
+    // Set initial object position
+    video.style.objectPosition = videos[0].position;
+
+    // --- AUDIO LOOP & CONTROLS ---
+    const audio = document.getElementById('bg-audio');
+    const songTitleDisplay = document.getElementById('song-title-display');
+    const nextBtn = document.getElementById('next-song');
+    const prevBtn = document.getElementById('prev-song');
+    const playPauseBtn = document.getElementById('play-pause');
+
+    const songs = [
+      'assets/bgmusic/Amazing.mp3',
+      'assets/bgmusic/Tell Your Friends.mp3'
+    ];
+
+    const songNames = [
+      'Amazing',
+      'Tell Your Friends'
+    ];
+
+    let songIndex = 0;
+    audio.src = songs[songIndex];
+    songTitleDisplay.textContent = songNames[songIndex];
+
+    // Play/pause toggle
+    playPauseBtn.addEventListener('click', () => {
+      if(audio.paused) {
+        audio.play();
+        playPauseBtn.textContent = '⭘';
+      } else {
+        audio.pause();
+        playPauseBtn.textContent = '●';
+      }
+    });
+
+    // Next song
+    nextBtn.addEventListener('click', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+      playPauseBtn.textContent = '⭘';
+    });
+
+    // Previous song
+    prevBtn.addEventListener('click', () => {
+      songIndex = (songIndex - 1 + songs.length) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+      playPauseBtn.textContent = '⭘';
+    });
+
+    // Auto-loop playlist
+    audio.addEventListener('ended', () => {
+      songIndex = (songIndex + 1) % songs.length;
+      audio.src = songs[songIndex];
+      songTitleDisplay.textContent = songNames[songIndex];
+      audio.play();
+    });
+  </script>
+
+</body>
+</html>
