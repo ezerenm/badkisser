@@ -19,26 +19,23 @@
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
     <a href="music.html">Music</a>
+    <a href="pecks.html">Pecks</a>
   </nav>
+
+  <!-- badkisser Radio - Top Right -->
+  <div id="badkisser-radio">
+    <span>badkisser Radio</span>
+    <button id="radio-toggle">⭘</button>
+  </div>
+
+  <!-- Audio element -->
+  <audio id="bg-audio"></audio>
 
   <!-- Fullscreen background video -->
   <video autoplay muted playsinline id="bg-video">
     <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
-
-  <!-- Song title above controls -->
-  <div id="song-title-display">Amazing</div>
-
-  <!-- Music Player Overlay -->
-  <div id="music-player">
-    <button id="prev-song">↫</button>
-    <button id="play-pause">⭘</button>
-    <button id="next-song">↬</button>
-  </div>
-
-  <!-- Audio element -->
-  <audio id="bg-audio"></audio>
 
   <!-- Centered content - ABOUT TEXT -->
   <div class="content about-content">
@@ -57,6 +54,13 @@
       A personal gallery of pieces of my soul, for you to see.<br><br>
       Established in San Francisco, 2025.
     </p>
+
+    <!-- Contact Links -->
+    <div class="contact-links">
+      <a href="https://instagram.com/ezssante" target="_blank">@ezssante</a>
+      <span class="separator">•</span>
+      <a href="mailto:inadequatekisser@gmail.com">inadequatekisser@gmail.com</a>
+    </div>
   </div>
 
   <!-- JavaScript for videos and audio -->
@@ -81,12 +85,9 @@
     // Set initial object position
     video.style.objectPosition = videos[0].position;
 
-    // --- AUDIO LOOP & CONTROLS ---
+    // --- BADKISSER RADIO ---
     const audio = document.getElementById('bg-audio');
-    const songTitleDisplay = document.getElementById('song-title-display');
-    const nextBtn = document.getElementById('next-song');
-    const prevBtn = document.getElementById('prev-song');
-    const playPauseBtn = document.getElementById('play-pause');
+    const radioToggle = document.getElementById('radio-toggle');
 
     const songs = [
       'assets/bgmusic/Amazing.mp3',
@@ -94,50 +95,41 @@
       'assets/bgmusic/LoversRock.mp3'
     ];
 
-    const songNames = [
-      'Amazing',
-      'Tell Your Friends',
-      'Lovers Rock'
-    ];
+    // Shuffle function
+    function shuffleArray(array) {
+      let shuffled = [...array];
+      for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+      }
+      return shuffled;
+    }
 
+    let playlist = shuffleArray(songs);
     let songIndex = 0;
-    audio.src = songs[songIndex];
-    songTitleDisplay.textContent = songNames[songIndex];
+    audio.src = playlist[songIndex];
 
-    // Play/pause toggle
-    playPauseBtn.addEventListener('click', () => {
+    // Radio toggle
+    radioToggle.addEventListener('click', () => {
       if(audio.paused) {
         audio.play();
-        playPauseBtn.textContent = '⭘';
+        radioToggle.textContent = '⭘';
       } else {
         audio.pause();
-        playPauseBtn.textContent = '●';
+        radioToggle.textContent = '●';
       }
     });
 
-    // Next song
-    nextBtn.addEventListener('click', () => {
-      songIndex = (songIndex + 1) % songs.length;
-      audio.src = songs[songIndex];
-      songTitleDisplay.textContent = songNames[songIndex];
-      audio.play();
-      playPauseBtn.textContent = '⭘';
-    });
-
-    // Previous song
-    prevBtn.addEventListener('click', () => {
-      songIndex = (songIndex - 1 + songs.length) % songs.length;
-      audio.src = songs[songIndex];
-      songTitleDisplay.textContent = songNames[songIndex];
-      audio.play();
-      playPauseBtn.textContent = '⭘';
-    });
-
-    // Auto-loop playlist
+    // Auto-play next song (shuffled order)
     audio.addEventListener('ended', () => {
-      songIndex = (songIndex + 1) % songs.length;
-      audio.src = songs[songIndex];
-      songTitleDisplay.textContent = songNames[songIndex];
+      songIndex = (songIndex + 1) % playlist.length;
+      
+      // Re-shuffle when playlist ends
+      if(songIndex === 0) {
+        playlist = shuffleArray(songs);
+      }
+      
+      audio.src = playlist[songIndex];
       audio.play();
     });
   </script>

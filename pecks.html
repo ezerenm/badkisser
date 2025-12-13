@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>badkisser</title>
+  <title>Pecks - badkisser</title>
 
   <!-- Google Font: Ballet -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,7 @@
 
   <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body style="background: #000000;">
 
   <!-- Navigation Header -->
   <nav class="navbar">
@@ -31,39 +31,35 @@
   <!-- Audio element -->
   <audio id="bg-audio"></audio>
 
-  <!-- Fullscreen background video -->
-  <video autoplay muted playsinline id="bg-video">
-    <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
+  <!-- Pecks Feed Container -->
+  <div class="pecks-container">
 
-  <!-- Centered content -->
-  <div class="content">
-    <h1>Badkisser</h1>
+    <!-- FIRST PECK (GREEN - NOW ON TOP) -->
+    <div class="peck" style="background: #2a4a2a;">
+      <div class="peck-content">
+        <p>I need my beauty sleep.</p>
+      </div>
+      <div class="peck-timestamp">January 01, 2000 00:00:00</div>
+    </div>
+
+    <!-- SECOND PECK (VIDEO BACKGROUND - NOW BELOW) -->
+    <div class="peck peck-with-video">
+      <!-- Background Video -->
+      <video autoplay muted loop playsinline class="peck-video">
+        <source src="assets/videos/enyas-drinkvideo.mp4" type="video/mp4">
+      </video>
+      
+      <!-- Content on top of video -->
+      <div class="peck-content">
+        <p>And then there was light.</p>
+      </div>
+      <div class="peck-timestamp">DECEMBER 12, 2025 22:23:45</div>
+    </div>
+
   </div>
 
-  <!-- JavaScript for videos and audio -->
+  <!-- JavaScript for audio -->
   <script>
-    // --- VIDEO LOOP ---
-    const video = document.getElementById('bg-video');
-    
-    const videos = [
-      { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
-      { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
-      { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
-    ];
-    let vidIndex = 0;
-
-    video.addEventListener('ended', () => {
-      vidIndex = (vidIndex + 1) % videos.length;
-      video.src = videos[vidIndex].src;
-      video.style.objectPosition = videos[vidIndex].position;
-      video.play();
-    });
-
-    // Set initial object position
-    video.style.objectPosition = videos[0].position;
-
     // --- BADKISSER RADIO ---
     const audio = document.getElementById('bg-audio');
     const radioToggle = document.getElementById('radio-toggle');
