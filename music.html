@@ -14,7 +14,22 @@
 </head>
 <body>
 
-  <!-- Navigation Header -->
+  <!-- Hamburger Menu Button (Mobile Only) -->
+  <button class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music</a>
+    <a href="pecks.html">Pecks</a>
+  </div>
+
+  <!-- Desktop Navigation Header -->
   <nav class="navbar">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -69,7 +84,7 @@
       <div class="playlist-description">
         <p>
           Barroilhet Avenue. Where do I start?<br><br>
-          I had a friend who lived in this spacious, empty house that they had to themselves more often than any teenager should. Each house is basically closed off and theres all types of houses. This house had a pink transluscent sculpture of a woman's body in the backyard. Only the hallways lights ever stayed on, these songs playing through their fathers sound system in his office. We would just pass through
+          I had a friend who lived in this spacious, empty house that they had to themselves more often than any teenager should. Each house is basically closed off and theres all types of houses. This house had art lazily picked out and it drove her nuts. Only the hallways lights ever stayed on, these songs playing through their fathers sound system in his office. We would just pass through
           each room like ghosts. Barroilhet Ave isn't just a street to me; it's a experimental limbo of over honesty, moping, and early unwanted independence.<br><br>
 
           Created on July 13, 2025.<br><br>
@@ -80,8 +95,26 @@
 
   </div>
 
-  <!-- JavaScript for videos and audio -->
+  <!-- JavaScript for hamburger, videos and audio -->
   <script>
+    // --- HAMBURGER MENU ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+
     // --- VIDEO LOOP ---
     const video = document.getElementById('bg-video');
     
@@ -109,7 +142,8 @@
     const songs = [
       'assets/bgmusic/Amazing.mp3',
       'assets/bgmusic/TellYourFriends.mp3',
-      'assets/bgmusic/LoversRock.mp3'
+      'assets/bgmusic/LoversRock.mp3',
+      'assets/bgmusic/LemonGlow.mp3'
     ];
 
     // Shuffle function
@@ -139,7 +173,8 @@
 
     // Auto-play next song (shuffled order)
     audio.addEventListener('ended', () => {
-      songIndex = (songIndex + 1) % playlist.length;
+      songIndex = (songIndex + 1) % playlist
+      .length;
       
       // Re-shuffle when playlist ends
       if(songIndex === 0) {

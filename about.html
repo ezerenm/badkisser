@@ -14,7 +14,22 @@
 </head>
 <body>
 
-  <!-- Navigation Header -->
+  <!-- Hamburger Menu Button (Mobile Only) -->
+  <button class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+
+  <!-- Mobile Menu Overlay -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="music.html">Music</a>
+    <a href="pecks.html">Pecks</a>
+  </div>
+
+  <!-- Desktop Navigation Header -->
   <nav class="navbar">
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
@@ -63,8 +78,26 @@
     </div>
   </div>
 
-  <!-- JavaScript for videos and audio -->
+  <!-- JavaScript for hamburger, videos and audio -->
   <script>
+    // --- HAMBURGER MENU ---
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+    });
+
+    // Close menu when clicking a link
+    const mobileLinks = mobileMenu.querySelectorAll('a');
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+      });
+    });
+
     // --- VIDEO LOOP ---
     const video = document.getElementById('bg-video');
     
@@ -92,7 +125,8 @@
     const songs = [
       'assets/bgmusic/Amazing.mp3',
       'assets/bgmusic/TellYourFriends.mp3',
-      'assets/bgmusic/LoversRock.mp3'
+      'assets/bgmusic/LoversRock.mp3',
+      'assets/bgmusic/LemonGlow.mp3'
     ];
 
     // Shuffle function
