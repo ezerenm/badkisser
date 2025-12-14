@@ -23,18 +23,20 @@
 
   <!-- Mobile Menu Overlay -->
   <div class="mobile-menu" id="mobile-menu">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="music.html">Music</a>
+    <a href="index.html">Badkisser</a>
+    <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
+    <a href="music.html">Audio</a>
+    <a href="about.html">About</a>
   </div>
 
   <!-- Desktop Navigation Header -->
-  <nav class="navbar">
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="music.html">Music</a>
+  <nav class="navbar" id="navbar">
+    <a href="index.html">Badkisser</a>
+    <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
+    <a href="music.html">Audio</a>
+    <a href="about.html">About</a>
   </nav>
 
   <!-- badkisser Radio - Top Right -->
@@ -73,7 +75,6 @@
 
   </div>
 
-  <!-- JavaScript for hamburger and audio -->
   <script>
     // --- HAMBURGER MENU ---
     const hamburger = document.getElementById('hamburger');
@@ -91,6 +92,34 @@
         hamburger.classList.remove('active');
         mobileMenu.classList.remove('active');
       });
+    });
+
+    // --- HIDE/SHOW HEADER ON HOVER ---
+    const navbar = document.getElementById('navbar');
+    const radio = document.getElementById('badkisser-radio');
+    let isHeaderHovered = false;
+
+    // Check if mouse is in header area (top 100px)
+    document.addEventListener('mousemove', (e) => {
+      if (e.clientY < 100) {
+        // Mouse in header zone - show
+        isHeaderHovered = true;
+        navbar.style.opacity = '1';
+        navbar.style.pointerEvents = 'auto';
+        radio.style.opacity = '0.6';
+        radio.style.pointerEvents = 'auto';
+        hamburger.style.opacity = '1';
+        hamburger.style.pointerEvents = 'auto';
+      } else {
+        // Mouse below header zone - hide
+        isHeaderHovered = false;
+        navbar.style.opacity = '0';
+        navbar.style.pointerEvents = 'none';
+        radio.style.opacity = '0';
+        radio.style.pointerEvents = 'none';
+        hamburger.style.opacity = '0';
+        hamburger.style.pointerEvents = 'none';
+      }
     });
 
     // --- BADKISSER RADIO ---
@@ -141,7 +170,8 @@
       audio.src = playlist[songIndex];
       audio.play();
     });
-  </script>
+</script>
+
 
 </body>
 </html>

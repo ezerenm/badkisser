@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Music - badkisser</title>
+  <title>Shop - badkisser</title>
 
   <!-- Google Font: Ballet -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
     <a href="index.html">Badkisser</a>
     <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
-    <a href="music.html">Audio</a>
+    <a href="music.html">Music</a>
     <a href="about.html">About</a>
   </div>
 
@@ -35,7 +35,7 @@
     <a href="index.html">Badkisser</a>
     <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
-    <a href="music.html">Audio</a>
+    <a href="music.html">Music</a>
     <a href="about.html">About</a>
   </nav>
 
@@ -49,53 +49,20 @@
   <audio id="bg-audio"></audio>
 
   <!-- Fullscreen background video -->
-  <video autoplay muted playsinline id="bg-video">
+  <video autoplay muted loop playsinline id="bg-video">
     <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <!-- Music Page Content -->
-  <div class="music-page-container">
-    
-    <!-- First Playlist Row (NEW ONE) -->
-    <div class="playlist-row">
-      <!-- Spotify Embed (Left/Northwest) -->
-      <div class="spotify-embed">
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5J0FTDvZgYzyf3g2zlyuom?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      
-      <!-- Text Description (Right/Northeast) -->
-      <div class="playlist-description">
-        <p>
-          Badkisser Radio Episode One.<br><br>
-          First aired on December 11, 2025.<br><br>
-        </p>
-      </div>
-    </div>
-
-    <!-- Second Playlist Row (OLD ONE) -->
-    <div class="playlist-row">
-      <!-- Spotify Embed (Left/Northwest) -->
-      <div class="spotify-embed">
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0TSbbRTjPw7MtAh8nc2q7E?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-      </div>
-      
-      <!-- Text Description (Right/Northeast) -->
-      <div class="playlist-description">
-        <p>
-          Barroilhet Avenue. Where do I start?<br><br>
-          I had a friend who lived in this spacious, empty house that they had to themselves more than any teenager should. Each house is basically closed off and so were the neighbors. In this house, we were king. This house had art lazily picked out and it drove her nuts. Only the hallways lights ever stayed on, these songs playing through their fathers sound system in his office. All of us would just pass through
-          each room like ghosts. Barroilhet Ave isn't just a street to me; it's a experimental limbo of over honesty, moping, and early unwanted independence.<br><br>
-
-          Created on July 13, 2025.<br><br>
-          Inspired by May through July, 2021.
-        </p>
-      </div>
-    </div>
-
+  <!-- Centered content -->
+  <div class="content">
+    <h1>Someone's excited.</h1>
+    <p class="shop-subtext">
+        <span style="opacity: 0.7;">Don't worry, <a href="https://instagram.com/ezssante" target="_blank">@ezssante</a> will let you know</span> all <span style="opacity: 0.7;">about it.</span>
+      </p>                    
   </div>
 
-  <!-- JavaScript for hamburger, videos and audio -->
+  <!-- JavaScript for hamburger and audio -->
   <script>
     // --- HAMBURGER MENU ---
     const hamburger = document.getElementById('hamburger');
@@ -142,8 +109,7 @@
     const songs = [
       'assets/bgmusic/Amazing.mp3',
       'assets/bgmusic/TellYourFriends.mp3',
-      'assets/bgmusic/LoversRock.mp3',
-      'assets/bgmusic/LemonGlow.mp3'
+      'assets/bgmusic/LoversRock.mp3'
     ];
 
     // Shuffle function
@@ -173,8 +139,7 @@
 
     // Auto-play next song (shuffled order)
     audio.addEventListener('ended', () => {
-      songIndex = (songIndex + 1) % playlist
-      .length;
+      songIndex = (songIndex + 1) % playlist.length;
       
       // Re-shuffle when playlist ends
       if(songIndex === 0) {
