@@ -49,7 +49,7 @@
   <audio id="bg-audio"></audio>
 
   <!-- Fullscreen background video -->
-  <video autoplay muted loop playsinline id="bg-video">
+  <video autoplay muted playsinline id="bg-video">
     <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
@@ -59,12 +59,9 @@
     
     <!-- First Playlist Row (NEW ONE) -->
     <div class="playlist-row">
-      <!-- Spotify Embed (Left/Northwest) -->
       <div class="spotify-embed">
         <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/5J0FTDvZgYzyf3g2zlyuom?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      
-      <!-- Text Description (Right/Northeast) -->
       <div class="playlist-description">
         <p>
           Badkisser Radio Episode One.<br><br>
@@ -76,12 +73,9 @@
 
     <!-- Second Playlist Row (OLD ONE) -->
     <div class="playlist-row">
-      <!-- Spotify Embed (Left/Northwest) -->
       <div class="spotify-embed">
         <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/0TSbbRTjPw7MtAh8nc2q7E?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
       </div>
-      
-      <!-- Text Description (Right/Northeast) -->
       <div class="playlist-description">
         <p>
           Barroilhet Avenue. Where do I start?<br><br>
@@ -116,23 +110,34 @@
       });
     });
 
-    // --- VIDEO LOOP WITH RANDOM START ---
+    // --- VIDEO LOOP WITH RANDOM START, THEN CAROUSEL ---
     const video = document.getElementById('bg-video');
-    const videos = [
+    const playlist = [
       { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
       { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
       { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
     ];
-    let vidIndex = Math.floor(Math.random() * videos.length);
-    video.src = videos[vidIndex].src;
-    video.style.objectPosition = videos[vidIndex].position;
+
+    let vidIndex = Math.floor(Math.random() * playlist.length);
+
+    function loadCurrent() {
+      const { src, position } = playlist[vidIndex];
+      video.src = src;
+      video.style.objectPosition = position;
+      video.load();
+      const onCanPlay = () => {
+        video.play().catch(() => {});
+        video.removeEventListener('canplay', onCanPlay);
+      };
+      video.addEventListener('canplay', onCanPlay);
+    }
 
     video.addEventListener('ended', () => {
-      vidIndex = (vidIndex + 1) % videos.length;
-      video.src = videos[vidIndex].src;
-      video.style.objectPosition = videos[vidIndex].position;
-      video.play();
+      vidIndex = (vidIndex + 1) % playlist.length;
+      loadCurrent();
     });
+
+    loadCurrent();
 
     // --- BADKISSER RADIO ---
     const audio = document.getElementById('bg-audio');
@@ -155,9 +160,9 @@
       return shuffled;
     }
 
-    let playlist = shuffleArray(songs);
+    let playlistAudio = shuffleArray(songs);
     let songIndex = 0;
-    audio.src = playlist[songIndex];
+    audio.src = playlistAudio[songIndex];
 
     radioToggle.addEventListener('click', () => {
       if(audio.paused) {
@@ -170,9 +175,9 @@
     });
 
     audio.addEventListener('ended', () => {
-      songIndex = (songIndex + 1) % playlist.length;
-      if(songIndex === 0) playlist = shuffleArray(songs);
-      audio.src = playlist[songIndex];
+      songIndex = (songIndex + 1) % playlistAudio.length;
+      if(songIndex === 0) playlistAudio = shuffleArray(songs);
+      audio.src = playlistAudio[songIndex];
       audio.play();
     });
   </script>
