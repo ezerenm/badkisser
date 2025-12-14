@@ -26,7 +26,7 @@
     <a href="index.html">Badkisser</a>
     <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
-    <a href="music.html">Audio</a>
+    <a href="music.html">Music</a>
     <a href="about.html">About</a>
   </div>
 
@@ -35,7 +35,7 @@
     <a href="index.html">Badkisser</a>
     <a href="shop.html">Shop</a>
     <a href="pecks.html">Pecks</a>
-    <a href="music.html">Audio</a>
+    <a href="music.html">Music</a>
     <a href="about.html">About</a>
   </nav>
 
@@ -49,38 +49,46 @@
   <audio id="bg-audio"></audio>
 
   <!-- Fullscreen background video -->
-  <video autoplay muted playsinline id="bg-video">
+  <video autoplay muted loop playsinline id="bg-video">
     <source src="assets/videos/TheWeekndAfterHours.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <!-- Centered content - ABOUT TEXT -->
-  <div class="content about-content">
-    <!-- Pokemon Team -->
-    <div class="pokemon-team">
-      <a href="https://pokemondb.net/pokedex/arcanine"><img src="assets/pokemon/Arcanine.gif" alt="Arcanine"></a>
-      <a href="https://pokemondb.net/pokedex/empoleon"><img src="assets/pokemon/Empoleon.gif" alt="Empoleon"></a>
-      <a href="https://pokemondb.net/pokedex/hydreigon"><img src="assets/pokemon/Hydreigon.gif" alt="Hydreigon"></a>
-      <a href="https://pokemondb.net/pokedex/mesprit"><img src="assets/pokemon/Mesprit.gif" alt="Mesprit"></a>
-      <a href="https://pokemondb.net/pokedex/gliscor"><img src="assets/pokemon/Gliscor.gif" alt="Gliscor"></a>
-      <a href="https://pokemondb.net/pokedex/luxray"><img src="assets/pokemon/Luxray.gif" alt="Luxray"></a>
-    </div>
+  <!-- About Content -->
+  <div class="about-content">
+    <p>Badkisser is a living and breathing archive from the mind and soul of Ezeren, Badkisser's founder. This is a digital creative space reserved for curated music, media, and moments that feel too personal to ignore, but too important to move on from.</p>
 
-    <p>
-      This is my space to archive the beauty I happen to cross paths with.<br>
-      A personal gallery of pieces of my soul, for you to see.<br><br>
-      Established in San Francisco, 2025.
-    </p>
+    <!-- Bad Company Credits -->
+    <div class="bad-company">
+      <h2>Bad Company</h2>
+      
+      <div class="credits-grid">
+        <div class="credit-item">
+          <p class="credit-line">Lhanna Padua</p>
+          <p class="credit-role">Curator</p>
+        </div>
+        
+        <div class="credit-item">
+          <p class="credit-line">God</p>
+          <p class="credit-role">Who made it all happen.</p>
+        </div>
+
+        <div class="credit-item">
+          <p class="credit-line">Remy Zarate</p>
+          <p class="credit-role">Creative Direction</p>
+        </div>
+      </div>
+    </div>
 
     <!-- Contact Links -->
     <div class="contact-links">
-      <a href="https://instagram.com/ezssante" target="_blank">@ezssante</a>
-      <span class="separator">•</span>
+      <a href="https://instagram.com/ezssante" target="_blank">ezssante</a>
+      <span class="separator">-</span>
       <a href="mailto:inadequatekisser@gmail.com">inadequatekisser@gmail.com</a>
     </div>
   </div>
 
-  <!-- JavaScript for hamburger, videos and audio -->
+  <!-- JavaScript for hamburger, video loop, and audio -->
   <script>
     // --- HAMBURGER MENU ---
     const hamburger = document.getElementById('hamburger');
@@ -100,15 +108,16 @@
       });
     });
 
-    // --- VIDEO LOOP ---
+    // --- VIDEO LOOP WITH RANDOM START ---
     const video = document.getElementById('bg-video');
-    
     const videos = [
       { src: 'assets/videos/TheWeekndAfterHours.mp4', position: 'center center' },
       { src: 'assets/videos/ChromeNails.mp4', position: 'center 56%' },
       { src: 'assets/videos/NYSkyline.mp4', position: 'center 70%' }
     ];
-    let vidIndex = 0;
+    let vidIndex = Math.floor(Math.random() * videos.length);
+    video.src = videos[vidIndex].src;
+    video.style.objectPosition = videos[vidIndex].position;
 
     video.addEventListener('ended', () => {
       vidIndex = (vidIndex + 1) % videos.length;
@@ -116,9 +125,6 @@
       video.style.objectPosition = videos[vidIndex].position;
       video.play();
     });
-
-    // Set initial object position
-    video.style.objectPosition = videos[0].position;
 
     // --- BADKISSER RADIO ---
     const audio = document.getElementById('bg-audio');
@@ -128,10 +134,9 @@
       'assets/bgmusic/Amazing.mp3',
       'assets/bgmusic/TellYourFriends.mp3',
       'assets/bgmusic/LoversRock.mp3',
-      'assets/bgmusic/LemonGlow.mp3'
+      'assets/bgmusic/FuckingYourgirl.mp3'
     ];
 
-    // Shuffle function
     function shuffleArray(array) {
       let shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -145,7 +150,6 @@
     let songIndex = 0;
     audio.src = playlist[songIndex];
 
-    // Radio toggle
     radioToggle.addEventListener('click', () => {
       if(audio.paused) {
         audio.play();
@@ -156,15 +160,9 @@
       }
     });
 
-    // Auto-play next song (shuffled order)
     audio.addEventListener('ended', () => {
       songIndex = (songIndex + 1) % playlist.length;
-      
-      // Re-shuffle when playlist ends
-      if(songIndex === 0) {
-        playlist = shuffleArray(songs);
-      }
-      
+      if(songIndex === 0) playlist = shuffleArray(songs);
       audio.src = playlist[songIndex];
       audio.play();
     });

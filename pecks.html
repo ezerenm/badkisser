@@ -97,13 +97,9 @@
     // --- HIDE/SHOW HEADER ON HOVER ---
     const navbar = document.getElementById('navbar');
     const radio = document.getElementById('badkisser-radio');
-    let isHeaderHovered = false;
 
-    // Check if mouse is in header area (top 100px)
     document.addEventListener('mousemove', (e) => {
       if (e.clientY < 100) {
-        // Mouse in header zone - show
-        isHeaderHovered = true;
         navbar.style.opacity = '1';
         navbar.style.pointerEvents = 'auto';
         radio.style.opacity = '0.6';
@@ -111,8 +107,6 @@
         hamburger.style.opacity = '1';
         hamburger.style.pointerEvents = 'auto';
       } else {
-        // Mouse below header zone - hide
-        isHeaderHovered = false;
         navbar.style.opacity = '0';
         navbar.style.pointerEvents = 'none';
         radio.style.opacity = '0';
@@ -130,10 +124,10 @@
       'assets/bgmusic/Amazing.mp3',
       'assets/bgmusic/TellYourFriends.mp3',
       'assets/bgmusic/LoversRock.mp3',
-      'assets/bgmusic/LemonGlow.mp3'
+      'assets/bgmusic/LemonGlow.mp3',
+      'assets/bgmusic/FuckingYourgirl.mp3'
     ];
 
-    // Shuffle function
     function shuffleArray(array) {
       let shuffled = [...array];
       for (let i = shuffled.length - 1; i > 0; i--) {
@@ -147,7 +141,6 @@
     let songIndex = 0;
     audio.src = playlist[songIndex];
 
-    // Radio toggle
     radioToggle.addEventListener('click', () => {
       if(audio.paused) {
         audio.play();
@@ -158,20 +151,13 @@
       }
     });
 
-    // Auto-play next song (shuffled order)
     audio.addEventListener('ended', () => {
       songIndex = (songIndex + 1) % playlist.length;
-      
-      // Re-shuffle when playlist ends
-      if(songIndex === 0) {
-        playlist = shuffleArray(songs);
-      }
-      
+      if(songIndex === 0) playlist = shuffleArray(songs);
       audio.src = playlist[songIndex];
       audio.play();
     });
-</script>
-
+  </script>
 
 </body>
 </html>
